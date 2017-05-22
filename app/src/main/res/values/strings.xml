@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TrabajApp</string>
+    <string name="salir">Salir</string>
+    <string name="sample">Sample</string>
+    <string name="trabajapp">TrabajApp</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prueba">Prueba</string>
+    <string name="nombre">Nombre</string>
+    <string name="Nombre2">Nombre:</string>
+    <string name="ciudad">Ciudad</string>
+    <string name="pais">Pais</string>
+    <string name="pais2">Pais:</string>
+    <string name="usuario">Usuario:</string>
+</resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "341031593966",
+    "firebase_url": "https://trabajapp-9fb35.firebaseio.com",
+    "project_id": "trabajapp-9fb35",
+    "storage_bucket": "trabajapp-9fb35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341031593966:android:41c585e00a27e54e",
+        "android_client_info": {
+          "package_name": "com.example.alejandrogs.trabajapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341031593966-9pa1cqdddu2k0r34pi9bb1d72n96m0sf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBODc_a-9uBqBbmWa6FyhK8HEYYnZYr9hk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
