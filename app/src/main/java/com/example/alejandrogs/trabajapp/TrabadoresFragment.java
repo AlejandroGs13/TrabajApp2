@@ -3,16 +3,17 @@ package com.example.alejandrogs.trabajapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,46 +25,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Objetos.FirebaseReference;
-import Objetos.MainrecyclerViewAdapter;
 import Objetos.Post;
+import Objetos.TrabajaRecyclerAdapter;
+import Objetos.Trabajo;
 import Objetos.Usuario;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragment extends Fragment {
+public class TrabadoresFragment extends Fragment {
 
+
+
+    TrabajaRecyclerAdapter adapter;
     RecyclerView recyclerView;
-    List<Post> posts;
-    MainrecyclerViewAdapter adapter;
+    List<Trabajo> trabajoList;
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-
-        View view  =inflater.inflate(R.layout.fragment_main,container,false);
-        recyclerView = (RecyclerView)view.findViewById(R.id.RecyclerMain);
+        View view = inflater.inflate(R.layout.fragment_trabadores, container, false);
+        recyclerView = (RecyclerView)view.findViewById(R.id.RecyclerTrabajador);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL,false));
 
-
-        posts = new ArrayList<>();
-
+        trabajoList = new ArrayList<>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-        adapter = new MainrecyclerViewAdapter(posts);
-
-
-
+        adapter = new TrabajaRecyclerAdapter(trabajoList);
 
         adapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("ENTRO","ENTRO si si");
-                //Toast.makeText(v.getContext(),"--"+recyclerView.getChildAdapterPosition(v),Toast.LENGTH_SHORT).show();
                 abrir(recyclerView.getChildAdapterPosition(v),v);
             }
         });
@@ -72,13 +68,13 @@ public class MainFragment extends Fragment {
 
 
         DatabaseReference reference = database.getReference(FirebaseReference.TRABAJA_REFERENCE);
-        reference.child(FirebaseReference.POST_REFERENCE).addValueEventListener(new ValueEventListener() {
+        reference.child(FirebaseReference.POST_TRABAJO).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                posts.removeAll(posts);
+                trabajoList.removeAll(trabajoList);
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    Post post= snapshot.getValue(Post.class);
-                    posts.add(post);
+                    Trabajo trabajo= snapshot.getValue(Trabajo.class);
+                    trabajoList.add(trabajo);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -90,20 +86,19 @@ public class MainFragment extends Fragment {
         });
 
 
+
         return view;
-
-
-
     }
 
 
     public void abrir(int pos,View view){
-        Intent intent = new Intent(view.getContext(),viewPostActivity.class);
-        intent.putExtra("titulo",posts.get(pos).getTitulo());
-        intent.putExtra("ruta",posts.get(pos).getRuta());
-        intent.putExtra("contenido",posts.get(pos).getNecesita());
-        intent.putExtra("email",posts.get(pos).getEmail());
-        intent.putExtra("phone",posts.get(pos).getNumero());
+        Intent intent = new Intent(view.getContext(),TrabajadorView.class);
+        intent.putExtra("name",trabajoList.get(pos).getNombre());
+        intent.putExtra("correo",trabajoList.get(pos).getCorreo());
+        intent.putExtra("ciudad",trabajoList.get(pos).getCiudad());
+        intent.putExtra("skill",trabajoList.get(pos).getSkills());
+        intent.putExtra("phone",trabajoList.get(pos).getNumero());
+        intent.putExtra("ruta",trabajoList.get(pos).getRuta());
         startActivity(intent);
 
 

@@ -170,7 +170,8 @@ public class AltaActivity extends AppCompatActivity  {
                                 @Override
                                 public void onScanCompleted(String path, Uri uri) {
                                     StorageReference filepath2 = mStorage.child("Fotos").child(uri.getLastPathSegment());
-                                    filepath2.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    filepath2.putFile(uri
+                                    ).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 

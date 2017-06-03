@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.alejandrogs.trabajapp.TrabajadorView">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/Image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="David Alejandro Garcia Sanchez1"
+        android:textAlignment="center"
+        android:layout_below="@+id/Image"
+        android:id="@+id/name"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="David Alejandro Garcia Sanchez2"
+        android:textAlignment="center"
+        android:layout_below="@+id/name"
+        android:id="@+id/correo"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="David Alejandro Garcia Sanchez3"
+        android:textAlignment="center"
+        android:layout_below="@+id/correo"
+        android:id="@+id/ciudad"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="David Alejandro Garcia Sanchez4"
+        android:textAlignment="center"
+        android:layout_below="@+id/ciudad"
+        android:id="@+id/skill"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/skill"
+        android:text="Llamar"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:id="@+id/btn_llamar"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/MyButton"/>
+
+</RelativeLayout>

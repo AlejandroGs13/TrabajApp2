@@ -2,6 +2,7 @@ package com.example.alejandrogs.trabajapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,10 +47,15 @@ import Objetos.Usuario;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FirebaseHelper firebaseHelper;
+    int nav = 1;
     ImageView perfil;
+    List<Post> pp;
+    FirebaseAuth.AuthStateListener mListener;
     IMageUrl iMageUrl;
     TextView textViewcorreo;
     List<Usuario> posts;
+    FloatingActionButton fab;
+    android.app.FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -60,22 +66,35 @@ public class MainActivity extends AppCompatActivity
         firebaseHelper = new FirebaseHelper();
         Bundle bundle = getIntent().getExtras();
         posts = new ArrayList<>();
+        pp = new ArrayList<>();
         final String email = bundle.getString("Email");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setImageResource(R.drawable.ic_add_white_24dp);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(view.getContext(),PostActivity.class);
-                intent.putExtra("Email",email);
-                intent.putExtra("Name",posts.get(0).getName());
-                intent.putExtra("Ruta",posts.get(0).getRuta());
-                intent.putExtra("Phone",posts.get(0).getPhone());
-                startActivity(intent);
-                //Toast.makeText(MainActivity.this,posts.get(0).getName()+"\n"+posts.get(0).getPhone()+"\n"+posts.get(0).getRuta(),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(MainActivity.this,email,Toast.LENGTH_SHORT).show();
+                if (nav == 1) {
+                    Intent intent = new Intent(view.getContext(), PostActivity.class);
+                    intent.putExtra("Email", email);
+                    intent.putExtra("Name", posts.get(0).getName());
+                    intent.putExtra("Ruta", posts.get(0).getRuta());
+                    intent.putExtra("Phone", posts.get(0).getPhone());
+                    startActivity(intent);
+                }
+                if (nav == 2){
+                    Intent intent = new Intent(view.getContext(), addTrabajoActivity.class);
+                    intent.putExtra("correo", email);
+                    intent.putExtra("name", posts.get(0).getName());
+                    intent.putExtra("ruta", posts.get(0).getRuta());
+                    intent.putExtra("numero", posts.get(0).getPhone());
+                    intent.putExtra("ciudad", posts.get(0).getCity());
+                    intent.putExtra("pais", posts.get(0).getCountry());
+                    startActivity(intent);
+                }
             }
         });
+
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -86,7 +105,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         android.app.FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.context_frame, new MainFragment()).commit();
@@ -162,16 +180,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            nav =1;
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.context_frame, new MainFragment()).commit();
+            fab.show();
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.context_frame, new ProfileFragment()).commit();
+            fab.hide();
+        }  else if (id == R.id.nav_send) {
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseAuth.getInstance().signOut();
 
@@ -179,12 +196,15 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
+        }else if (id == R.id.nav_job){
+            nav = 2;
+            fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.context_frame, new TrabadoresFragment()).commit();
+            fab.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
 }

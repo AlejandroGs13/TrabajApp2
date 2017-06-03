@@ -1,9 +1,13 @@
 package Objetos;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,11 +27,16 @@ public class IMageUrl
         this.url = url;
     }
 
-    public void cambiar(){
-        new GetImageToURL().execute(url);
+    public void cambiar(Context context){
+        /*Glide glide
+                .with(context)
+                .load(internetUrl)
+                .into(targetImageView);*/
+        Glide.with(context).load(url).into(imageView);
     }
 
-    private class GetImageToURL extends AsyncTask< String, Void, Bitmap > {
+
+    public class GetImageToURL extends AsyncTask< String, Void, Bitmap > {
 
         @Override
         protected Bitmap doInBackground(String...params) {
@@ -38,6 +47,7 @@ public class IMageUrl
                 connection.connect();
                 InputStream input = connection.getInputStream();
                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
                 return myBitmap;
             } catch (IOException e) {
                 // Log exception
@@ -50,4 +60,6 @@ public class IMageUrl
             imageView.setImageBitmap(myBitMap);
         }
     }
+
+
 }

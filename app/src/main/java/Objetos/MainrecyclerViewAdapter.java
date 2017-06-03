@@ -1,5 +1,7 @@
 package Objetos;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -23,12 +25,18 @@ import java.util.List;
  * Created by alejandrogs on 20/05/17.
  */
 
-public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerViewAdapter.MainviewHolder>{
+public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerViewAdapter.MainviewHolder> implements View.OnClickListener{
 
     List<Post> posts;
-
+    private View.OnClickListener listener;
     public MainrecyclerViewAdapter(List<Post> posts) {
         this.posts = posts;
+    }
+
+
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
 
@@ -36,6 +44,7 @@ public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerVi
     public MainviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview_main,parent,false);
+        view.setOnClickListener(this);
         MainviewHolder viewHolder = new MainviewHolder(view);
         return viewHolder;
     }
@@ -53,7 +62,8 @@ public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerVi
         holder.direccion.setText("Necesita:"+usuario.getNecesita());
         IMageUrl iMageUrl;
         iMageUrl = new IMageUrl(holder.perfil,url);
-        iMageUrl.cambiar();
+        iMageUrl.cambiar(holder.itemView.getContext());
+        guardar(holder.itemView.getContext(),usuario.getEmail(),usuario.getTitulo(),usuario.getRuta());
     }
 
     @Override
@@ -63,7 +73,11 @@ public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerVi
 
 
 
-
+    @Override
+    public void onClick(View view) {
+        if(listener != null)
+            listener.onClick(view);
+    }
 
     public static class  MainviewHolder extends RecyclerView.ViewHolder{
 
@@ -79,5 +93,15 @@ public class MainrecyclerViewAdapter extends RecyclerView.Adapter<MainrecyclerVi
             direccion = (TextView) itemView.findViewById(R.id.direccion);
             perfil = (ImageView)itemView.findViewById(R.id.image);
         }
+    }
+
+    public void guardar(Context context,String dato,String dato2,String dato3){
+        SharedPreferences preferencias = context.getSharedPreferences("mospreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("dato",dato);
+        editor.putString("dato2",dato2);
+        editor.putString("dato3",dato3);
+        editor.apply();
+        editor.commit();
     }
 }

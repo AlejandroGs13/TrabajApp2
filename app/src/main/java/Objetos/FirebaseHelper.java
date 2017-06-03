@@ -28,6 +28,11 @@ public class FirebaseHelper {
     }
 
 
+    public void addTrabajo(String name, String skill, String numero, String correo, String ciudad,String pais,String ruta,String descripcion){
+        Trabajo trabajo = new Trabajo(correo,name,numero,ciudad,pais,skill,ruta,descripcion);
+        reference.child(FirebaseReference.POST_TRABAJO).push().setValue(trabajo);
+    }
+
     public void addPost(String titulo, String necesita, String numero, String correo, String nombre,String ruta){
         Post post = new Post(titulo,necesita,numero,correo,nombre,ruta);
         reference.child(FirebaseReference.POST_REFERENCE).push().setValue(post);

@@ -19,4 +19,6 @@
     <string name="pais">Pais</string>
     <string name="pais2">Pais:</string>
     <string name="usuario">Usuario:</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
